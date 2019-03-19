@@ -32,7 +32,8 @@ pipeline {
           def randomString = sh(returnStdout: true, 
                                 script: 'cat /dev/urandom | tr -dc "a-zA-Z0-9" | fold -w 32 | head -n 1')
                                 
-          sh "echo $randomString > foobar"
+          sh "echo '$randomString' > foobar"
+          sh 'cat foobar'
         }
       }
     }
