@@ -55,7 +55,7 @@ pipeline {
 
   post {
     always {
-      // sendNotifications currentBuild.result
+      echo "Done"
     }
   }
 }
