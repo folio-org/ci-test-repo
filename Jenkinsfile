@@ -28,8 +28,12 @@ pipeline {
 
     stage('Create New Files') {
       steps {
-        sh 'touch foo'
-        sh 'touch bar'
+        script {
+          def randomString = sh(returnStdout: true, 
+                                script: 'cat /dev/urandom | tr -dc "a-zA-Z0-9" | fold -w 32 | head -n 1')
+                                
+          sh "echo $randomString > foobar"
+        }
       }
     }
 
@@ -39,11 +43,10 @@ pipeline {
       }
       steps {
         sh 'git checkout master'
-        sh 'git add foo'
-        sh 'git add bar'
+        sh 'git add foobar'
         script {
            def commitStatus = sh(returnStatus: true,
-                                 script: 'git commit -m "committing files: foo,bar"') 
+                                 script: 'git commit -m "committing files: foobar"') 
             if (commitStatus == 0) { 
               sshGitPush(origin: env.origin, branch: 'master') 
             }
