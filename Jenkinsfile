@@ -26,7 +26,7 @@ pipeline {
           dir("${env.WORKSPACE}/foo") {
             def foo = 'bar'
           }
-          if (foo == 'bar') { 
+          if ($foo == 'bar') { 
             echo "bar"
           }
           else { 
