@@ -24,9 +24,9 @@ pipeline {
         script {
           currentBuild.displayName = "#${env.BUILD_NUMBER}-${env.JOB_BASE_NAME}"
           dir("${env.WORKSPACE}/foo") {
-            def foo = 'bar'
+            env.foo = 'bar'
           }
-          if ($foo == 'bar') { 
+          if (env.foo == 'bar') { 
             echo "bar"
           }
           else { 
