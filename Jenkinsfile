@@ -23,6 +23,15 @@ pipeline {
       steps {
         script {
           currentBuild.displayName = "#${env.BUILD_NUMBER}-${env.JOB_BASE_NAME}"
+          dir("${env.WORKSPACE}/foo") {
+            def foo = 'bar'
+          }
+          if (foo == 'bar') { 
+            echo "bar"
+          }
+          else { 
+            echo "foo"
+          }
         }
       }
     }
