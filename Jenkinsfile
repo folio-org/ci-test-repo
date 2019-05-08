@@ -35,6 +35,15 @@ pipeline {
         }
       }
     }
+    stage('build docker') {
+      doDocker = {
+      buildDocker {
+        publishMaster = 'no'
+        dockerDir = "${env.WORKSPACE}"
+        healthChk = 'no'
+        }
+      }
+    }
   } // end stages
 
   post {
