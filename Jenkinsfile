@@ -19,6 +19,7 @@ pipeline {
   }
 
   stages {
+
     stage('Setup') {
       steps {
         script {
@@ -35,16 +36,24 @@ pipeline {
         }
       }
     }
-    stage('build docker') {
-      doDocker = {
-      buildDocker {
-        publishMaster = 'no'
-        dockerDir = "${env.WORKSPACE}"
-        healthChk = 'no'
+
+    stage('Build Docker') {
+      steps{
+        script {
+          buildDocker {
+            publishMaster = 'yes'
+            dockerDir = 'project'
+            healthChk = 'no'
+          }
         }
       }
     }
+
   } // end stages
+
+
+
+
 
   post {
     always {
