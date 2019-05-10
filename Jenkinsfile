@@ -20,6 +20,11 @@ pipeline {
 
   stages {
     stage('condition') {
+      when {
+        expression {
+          "${env.BRANCH_NAME}" == 'f-1992-docker-test'
+        }
+      }
       steps{
         echo "${env.BRANCH_NAME}"
       }
