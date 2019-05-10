@@ -19,7 +19,12 @@ pipeline {
   }
 
   stages {
-
+    stage('condition') {
+      steps{
+        echo "${env.BRANCH_NAME}"
+      }
+    }
+ 
     stage('Setup') {
       steps {
         script {
@@ -37,23 +42,7 @@ pipeline {
       }
     }
 
-    stage('Build Docker') {
-      steps{
-        script {
-          buildDocker {
-            publishMaster = 'yes'
-            dockerDir = 'project'
-            healthChk = 'no'
-          }
-        }
-      }
-    }
-
   } // end stages
-
-
-
-
 
   post {
     always {
