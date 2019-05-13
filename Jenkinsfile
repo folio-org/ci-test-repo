@@ -33,8 +33,8 @@ pipeline {
     stage('Setup') {
       steps {
         script {
-          sh 'echo {\"test\":\"pipe\"} | jq .'
-          sh 'echo {\"test\":\"redirect\"} > file.json'
+          sh 'echo {"test":"pipe"} | jq .'
+          sh 'echo {"test":"redirect"} > file.json'
           sh 'jq . < file.json'
           currentBuild.displayName = "#${env.BUILD_NUMBER}-${env.JOB_BASE_NAME}"
           dir("${env.WORKSPACE}/foo") {
