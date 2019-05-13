@@ -33,14 +33,15 @@ pipeline {
     stage('Setup') {
       steps {
         script {
-          sh 'echo {"test":"pipe"} | jq .'
-          sh 'echo {"test":"redirect"} > file.json'
-          sh 'jq . < file.json'
           currentBuild.displayName = "#${env.BUILD_NUMBER}-${env.JOB_BASE_NAME}"
           dir("${env.WORKSPACE}/foo") {
             env.foo = 'bar'
           }
-          if (env.foo == 'bar') { 
+          if ((env.BRANCH_NAME == 'master') ||
+              (env.BRANCH_NAME == 'f-1992-docker-test') &&
+              (env.foo == 'bar') ||
+              (env.isRelease) &&
+              (publishMaster ==~ /(?i)(Y|YES|T|TRUE)/)) { 
             echo "bar"
           }
           else { 
