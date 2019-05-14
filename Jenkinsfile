@@ -37,15 +37,12 @@ pipeline {
           dir("${env.WORKSPACE}/foo") {
             env.foo = 'bar'
           }
-          if ((env.BRANCH_NAME == 'master') ||
-              (env.BRANCH_NAME == 'f-1992-docker-test') &&
-              (env.foo == 'bar') ||
-              (env.isRelease) &&
-              (publishMaster ==~ /(?i)(Y|YES|T|TRUE)/)) { 
-            echo "bar"
+          def foliociLib = new org.folio.foliociCommands()
+          if ( foliociLib.isRelease() ) {
+            echo "is release"
           }
           else { 
-            echo "foo"
+            echo "not release"
           }
         }
       }
