@@ -31,9 +31,9 @@ pipeline {
             echo it.id
             def matches = (it.id =~ /^(.*?)\-(\d+.*)/)
             def customName = matches[0]
-            def customVer = matches[1]
+            //def customVer = matches[1]
             echo "Name: $customName"
-            echo "Version: $customVer"
+            //echo "Version: $customVer"
           }
         }
       }
