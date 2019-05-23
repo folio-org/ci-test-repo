@@ -19,18 +19,13 @@ pipeline {
   }
 
   stages {
-    stage('Setup') {
+    stage('test') {
       steps {
         script {
-          currentBuild.displayName = "#${env.BUILD_NUMBER}-${env.JOB_BASE_NAME}"
-          dir("${env.WORKSPACE}/foo") {
-            env.foo = 'bar'
-          }
-          if (env.foo == 'bar') { 
-            echo "bar"
-          }
-          else { 
-            echo "foo"
+          def customList = sh(returnStdout: true,
+                              script: 'jq -r '.[].id' custom-deps.json')
+          customList.each {
+            echo it
           }
         }
       }
