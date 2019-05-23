@@ -29,10 +29,11 @@ pipeline {
     
           customMods.each {
             echo it.id
-            def modRegex = /^(.*?)\-\d+\.*/
-            def customName = (it.id =~ /^(.*?)\-\d+.*/)
+            def matches = (it.id =~ /^(.*?)\-(\d+.*)/)
+            def customName = matches[0]
+            def customVer = matches[1]
             echo "Name: $customName"
-             
+            echo "Version: $customVer"
           }
         }
       }
