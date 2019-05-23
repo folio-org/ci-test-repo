@@ -23,10 +23,13 @@ pipeline {
       steps {
         script {
    
-          def customList = sh(returnStdout: true,
-                          script: "jq -r '.[].id' custom-deps.json").split(' ')
-          customList.each {
-            echo it
+          // def customList = sh(returnStdout: true,
+          //                script: "jq -r '.[].id' custom-deps.json").split(' ')
+          def customMods = readJSON file: 'custom-deps.json'
+    
+          customMods.each {
+            echo it.id
+            echo it.action
           }
         }
       }
