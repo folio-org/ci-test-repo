@@ -22,7 +22,9 @@ pipeline {
     stage('test') {
       steps {
         script {
-          def customList = sh(returnStdout: true,
+   
+          def customList = []
+          customList = sh(returnStdout: true,
                               script: "jq -r '.[].id' custom-deps.json")
           customList.each {
             echo it
