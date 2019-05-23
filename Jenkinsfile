@@ -23,9 +23,9 @@ pipeline {
       steps {
         script {
    
-          def customList = []
-          customList = sh(returnStdout: true,
-                              script: "jq -r '.[].id' custom-deps.json")
+          def List customList = sh(returnStdout: true,
+                          script: "jq -r '.[].id' custom-deps.json")
+          echo "$customList"
           customList.each {
             echo it
           }
