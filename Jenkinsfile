@@ -24,8 +24,7 @@ pipeline {
         script {
    
           def customList = sh(returnStdout: true,
-                          script: "jq -r '.[].id' custom-deps.json")
-          echo "$customList"
+                          script: "jq -r '.[].id' custom-deps.json").split(' ')
           customList.each {
             echo it
           }
