@@ -29,7 +29,10 @@ pipeline {
     
           customMods.each {
             echo it.id
-            echo it.action
+            def modRegex = /^(.*?)\-\d+\.*/
+            def customName = (it.id =~ /^(.*?)\-\d+.*/)
+            echo "Name: $customName"
+             
           }
         }
       }
