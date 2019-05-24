@@ -41,7 +41,7 @@ pipeline {
             echo "Version: " + customModVer
 
             okapiMods.each {
-              if (it.id.matches("${customModName}(.*)")) { 
+              if (it.id.matches("${customModName}(-\d+.*)")) { 
                  it.id = customMod
                  it.action = customModAction
               }
