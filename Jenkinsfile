@@ -35,18 +35,17 @@ pipeline {
             def customModName = matches[0][1]
             def customModVer = matches[0][2]
           
-            echo "Custom Mod: " + customMod
-            echo "Custom Mod Action: " + customModAction
-            echo "Name: " + customModName
-            echo "Version: " + customModVer
+            echo "Adding Custom Module: " + customMod
+            echo "Adding Custom Module Action: " + customModAction
 
             okapiMods.each {
-              if (it.id.matches("${customModName}-(\d+.*)")) { 
+              if (it.id ==~ /^${customModName}-\d+.*/) { 
                  it.id = customMod
                  it.action = customModAction
               }
             }
-            echo "OKAPI MODS: " + okapiMods
+            writeJSON file: 'okapi-install.json', json: okapiMods, pretty: 2
+            sh 'cat okapi-install.json'
                 
           }
         }
