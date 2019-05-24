@@ -25,9 +25,11 @@ pipeline {
    
           // def customList = sh(returnStdout: true,
           //                script: "jq -r '.[].id' custom-deps.json").split(' ')
+
+          def foliociLib = new org.folio.foliociCommands()
           def subModList = readJSON file: 'custom-deps.json'
           def okapiTenantModList = readJSON file: 'okapi-install.json'
-          okapiTenantModList = subTenantMods(subModList,okapiTenantModList)
+          okapiTenantModList = foliociLib.subTenantMods(subModList,okapiTenantModList)
           writeJSON file: 'okapi-install.json', json: okapiTenantModList, pretty: 2
           sh 'cat okapi-install.json'
         }
