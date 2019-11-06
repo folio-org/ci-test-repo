@@ -1,4 +1,4 @@
-@Library ('folio_jenkins_shared_libs@FOLIO-2036') _
+@Library ('folio_jenkins_shared_libs@FOLIO-2011a') _
 
 
 pipeline {
@@ -22,16 +22,10 @@ pipeline {
     stage('test') {
       steps {
         script {
-   
-          // def customList = sh(returnStdout: true,
-          //                script: "jq -r '.[].id' custom-deps.json").split(' ')
-
-          def foliociLib = new org.folio.foliociCommands()
-          def subModList = readJSON file: 'custom-deps.json'
-          def okapiTenantModList = readJSON file: 'okapi-install.json'
-          okapiTenantModList = foliociLib.subTenantMods(subModList,okapiTenantModList)
-          writeJSON file: 'okapi-install.json', json: okapiTenantModList, pretty: 2
-          sh 'cat okapi-install.json'
+          def modules = readJSON text: 'okapi-install.json'
+          each.modules {
+            echo "${it.id}"
+          }
         }
       }
     }
