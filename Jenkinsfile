@@ -23,7 +23,7 @@ pipeline {
       steps {
         script {
           def modules = readJSON file: 'okapi-install.json'
-          each.modules {
+          modules.each {
             def mod = it.id
             echo "${mod}"
           }
