@@ -22,9 +22,10 @@ pipeline {
     stage('test') {
       steps {
         script {
-          def modules = readJSON text: 'okapi-install.json'
+          def modules = readJSON file: 'okapi-install.json'
           each.modules {
-            echo "${it.id}"
+            def mod = it.id
+            echo "${mod}"
           }
         }
       }
