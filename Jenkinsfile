@@ -28,7 +28,7 @@ pipeline {
             okapiInstall.each {
               def mod = it.id
               echo "Mod: ${mod}"
-              if (mod ==~ /mod-\d+\.\d+\.\d+-SNAPSHOT\.\d+\.\d+/) {
+              if (mod ==~ /mod-.*-\d+\.\d+\.\d+-SNAPSHOT\.\d+\.\d+/) {
                 echo "$mod is a preview module"
               }
             }
