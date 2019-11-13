@@ -29,7 +29,7 @@ pipeline {
             def mod = it.id
             echo "Mod: ${mod}"
             if( mod ==~ /mod-\d+\.\d+\.\d+-SNAPSHOT\.\d+\.\d+/ ) {
-              echo "$mod is a preview module
+              echo "$mod is a preview module"
             }
           }    
         }
