@@ -24,7 +24,8 @@ pipeline {
         script {
           docker.image('folioorg/okapi:latest').withRun('', 'dev') { container -> def okapiIp = sh(returnStdout:true, script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${container.id}").trim()
 
-      
+            // make sure okapi is fully started
+            sleep 5 
             def previewOpts = [ previewOkapiUrl: "http://${okapiIp}:9130" ]
             setupPreviewEnv(previewOpts)
           }    
