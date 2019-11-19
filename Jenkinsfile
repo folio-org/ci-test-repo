@@ -14,7 +14,7 @@ pipeline {
 
   agent {
     node {
-      label 'jenkins-slave-all-node10'
+      label 'jenkins-slave-all'
     }
   }
 
@@ -22,13 +22,20 @@ pipeline {
     stage('test') {
       steps {
         script {
-          docker.image('folioorg/okapi:latest').withRun('', 'dev') { container -> def okapiIp = sh(returnStdout:true, script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${container.id}").trim()
-
-            // make sure okapi is fully started
-            sleep 5 
-            def previewOpts = [ previewOkapiUrl: "http://${okapiIp}:9130" ]
-            setupPreviewEnv(previewOpts)
-          }    
+          withCredentials([file(credentialsId: 'okapi-preview-supertenant', 
+                                variable: 'SUPERTENANT_CREDS')]) {
+            def tenantCredentials = readFile file: "$SUPERTENANT_CREDS"
+            httpRequest acceptType: 'APPLICATION_JSON_UTF8', 
+                      authentication: 'cd96210b-c06f-4f09-a836-f992a685a97a', 
+                      consoleLogResponseBody: true, 
+                      contentType: 'APPLICATION_JSON_UTF8', 
+                      customHeaders: [[maskValue: false, name: 'X-Okapi-Tenant', value: 'supertenant']], 
+                      
+                      requestBody: tenantCredentials, 
+                      httpMode: 'POST', 
+                      responseHandle: 'NONE', 
+                      url: 'https://okapi-preview.ci.folio.org/authn/login'
+          }
         }
       }
     }
