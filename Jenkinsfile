@@ -22,6 +22,7 @@ pipeline {
     stage('test') {
       steps {
         script {
+          def previewOkapiUrl = 'https://okapi-preview.ci.folio.org'
           withCredentials([usernamePassword(credentialsId: 'okapi-preview-superuser', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
             writeFile file: 'getOkapiToken.sh', text: libraryResource('org/folio/getOkapiToken.sh')
             sh 'chmod +x getOkapiToken.sh' 
