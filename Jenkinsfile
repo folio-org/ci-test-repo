@@ -21,9 +21,9 @@ pipeline {
   stages {
     stage('test') {
       steps {
+        @NonCPS
         script {
           //if ( (env.CHANGE_ID) && (fileExists('.pr-custom-deps.json')) )  {
-          @NonCPS
           if (fileExists('.pr-custom-deps.json'))  {
             // get pr deps
             def previewMods = readJSON file: '.pr-custom-deps.json'
