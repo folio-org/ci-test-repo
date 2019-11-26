@@ -23,9 +23,9 @@ pipeline {
       steps {
         script {
           //if ( (env.CHANGE_ID) && (fileExists('.pr-custom-deps.json')) )  {
+          @NonCPS
           if (fileExists('.pr-custom-deps.json'))  {
             // get pr deps
-            @NonCPS
             def previewMods = readJSON file: '.pr-custom-deps.json'
             def mods = readJSON file: 'install-extras.json'
             def previewMod
@@ -46,7 +46,6 @@ pipeline {
               echo "Action: " + previewModAction
             
               mods.each { 
-                @NonCPS
                 if (it.id ==~ /^${previewModName}-\d+.*/) {
                   it.id = previewMod
                   it.action = previewModAction
