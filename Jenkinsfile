@@ -22,24 +22,45 @@ pipeline {
     stage('test') {
       steps {
         script {
-          // Concat custom backend deps as well here
-          echo "Adding additional modules to stripes-install.json"
-          sh 'mv stripes-install.json stripes-install-pre.json'
-          sh 'jq -s \'.[0]=([.[]]|flatten)|.[0]\' stripes-install-pre.json install-extras.json > stripes-install.json'
-          def stripesInstallJson = readFile('./stripes-install.json')
-          platformDepCheck(env.tenant,stripesInstallJson)
-          echo 'Generating backend dependency list to okapi-install.json'
-          sh 'jq \'map(select(.id | test(\"mod-\"; \"i\")))\' install.json > okapi-install.json'
-          sh 'cat okapi-install.json'
-
           //if ( (env.CHANGE_ID) && (fileExists('.pr-custom-deps.json')) )  {
           if (fileExists('.pr-custom-deps.json'))  {
             // get pr deps
             def customDeps = readJSON file: '.pr-custom-deps.json'
-            def OkapiInstallList = readJSON file: 'okapi-install.json'
-            def previewOkapiInstallList = foliociLib.subPreviewMods(customDeps,okapiInstallList)
-            writeJSON file: 'okapi-install.json', json: previewOkapiInstallList, pretty: 2
-            sh 'cat okapi-install.json'
+            def installExtras = readJSON file: 'install-extras.json'
+            def previewMod
+            def previewModAction
+            def matches
+            def previewModName
+            def Boolean exists
+
+            previewMods.each {
+              exists = false
+              previewMod = it.id
+              previewModAction = it.action
+              matches = (it.id =~ /^(.*?)\-(\d+.*)/)
+              previewModName = matches[0][1]
+
+              echo "Substituting: " + previewModName + "-->" + previewMod
+              echo "Action: " + previewModAction
+
+              def modDup = sh (returnStatus: true, script: "grep $previewModName 
+
+              mods.each { 
+                if (it.id ==~ /^${previewModName}-\d+.*/) {
+                  it.id = previewMod
+                  it.action = previewModAction
+                  exists = true
+                }
+              }
+              if (!exists) { 
+                def new = [:]
+                new.put('id', previewMod)
+                new.put('action', previewAction)
+                mods << new
+              }
+            }
+            writeJSON file: 'install-extras-new.json'
+            echo "cat install-extras-new.json"
           }
         }
       }
