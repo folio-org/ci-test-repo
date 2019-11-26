@@ -5,6 +5,8 @@ pipeline {
 
   environment {
     origin = 'ci-test-repo'
+    folioRegistry = 'http://folio-registry.aws.indexdata.com'
+    tenant = 'diku'
   }
 
   options {
@@ -23,7 +25,6 @@ pipeline {
       steps {
         script {
           def foliociLib = new org.folio.foliociCommands()
-          env.tentant = 'diku'
 
           // Deal with PR Deps for preview mode
           if (fileExists('.pr-custom-deps.json'))  {
