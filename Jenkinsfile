@@ -25,8 +25,8 @@ pipeline {
           //if ( (env.CHANGE_ID) && (fileExists('.pr-custom-deps.json')) )  {
           if (fileExists('.pr-custom-deps.json'))  {
             // get pr deps
-            def customDeps = readJSON file: '.pr-custom-deps.json'
-            def installExtras = readJSON file: 'install-extras.json'
+            def previewMods = readJSON file: '.pr-custom-deps.json'
+            def mods = readJSON file: 'install-extras.json'
             def previewMod
             def previewModAction
             def matches
