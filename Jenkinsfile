@@ -23,6 +23,7 @@ pipeline {
       steps {
         script {
           // if ( (env.CHANGE_ID) && (fileExists('.pr-custom-deps.json')) )  {
+          def foliociLib = new org.folio.foliociCommands()
           if (fileExists('.pr-custom-deps.json'))  {
             // get pr deps
             def previewMods = readJSON file: '.pr-custom-deps.json'
