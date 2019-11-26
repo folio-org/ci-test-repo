@@ -34,6 +34,7 @@ pipeline {
             def Boolean exists
             def newEntry
 
+            @NonCPS
             previewMods.each {
               exists = false
               previewMod = it.id
