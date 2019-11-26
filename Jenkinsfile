@@ -32,6 +32,7 @@ pipeline {
             def matches
             def previewModName
             def Boolean exists
+            def newEntry
 
             previewMods.each {
               exists = false
@@ -51,10 +52,10 @@ pipeline {
                 }
               }
               if (!exists) { 
-                def new = [:]
-                new.put('id', previewMod)
-                new.put('action', previewAction)
-                mods << new
+                newEntry = [:]
+                newEntry.put('id', previewMod)
+                newEntry.put('action', previewAction)
+                mods << newEntry
               }
             }
             writeJSON file: 'install-extras-new.json'
