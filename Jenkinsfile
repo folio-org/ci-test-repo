@@ -44,7 +44,9 @@ pipeline {
 
               echo "Substituting: " + previewModName + "-->" + previewMod
               echo "Action: " + previewModAction
+            
 
+              @NonCPS
               mods.each { 
                 if (it.id ==~ /^${previewModName}-\d+.*/) {
                   it.id = previewMod
