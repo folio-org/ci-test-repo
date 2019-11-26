@@ -28,7 +28,7 @@ pipeline {
             // get pr deps
             def previewMods = readJSON file: '.pr-custom-deps.json'
             def installExtras  = readJSON file: 'install-extras.json'
-            newInstallExtras = foliociLib.subPreviewMods(previewMods,installExtras)
+            def newInstallExtras = foliociLib.subPreviewMods(previewMods,installExtras)
          
             writeJSON file: 'install-extras-new.json', json: newInstallExtras
             sh 'cat install-extras-new.json'
