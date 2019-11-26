@@ -30,7 +30,7 @@ pipeline {
             def installExtras  = readJSON file: 'install-extras.json'
             def newInstallExtras = foliociLib.subPreviewMods(previewMods,installExtras)
          
-            writeJSON file: 'install-extras-new.json', json: newInstallExtras
+            writeJSON file: 'install-extras-new.json', json: newInstallExtras, pretty: 2
             sh 'cat install-extras-new.json'
           }
         }
