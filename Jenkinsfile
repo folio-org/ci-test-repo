@@ -43,8 +43,6 @@ pipeline {
               echo "Substituting: " + previewModName + "-->" + previewMod
               echo "Action: " + previewModAction
 
-              def modDup = sh (returnStatus: true, script: "grep $previewModName 
-
               mods.each { 
                 if (it.id ==~ /^${previewModName}-\d+.*/) {
                   it.id = previewMod
