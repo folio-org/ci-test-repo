@@ -21,30 +21,32 @@ pipeline {
   stages {
     stage('test') {
       steps {
-        @NonCPS
         script {
           //if ( (env.CHANGE_ID) && (fileExists('.pr-custom-deps.json')) )  {
           if (fileExists('.pr-custom-deps.json'))  {
             // get pr deps
             def previewMods = readJSON file: '.pr-custom-deps.json'
             def mods = readJSON file: 'install-extras.json'
-            def previewMod
-            def previewModAction
-            def matches
-            def previewModName
-            def Boolean exists
-            def newEntry
+         
+            // def previewMod
+            // def previewModAction
+            // def matches
+            // def previewModName
+            // def Boolean exists
+            // def newEntry
 
+            @NonCPS
             previewMods.each {
-              exists = false
-              previewMod = it.id
-              previewModAction = it.action
-              matches = (it.id =~ /^(.*?)\-(\d+.*)/)
-              previewModName = matches[0][1]
+              def exists = false
+              def previewMod = it.id
+              def previewModAction = it.action
+              def matches = (it.id =~ /^(.*?)\-(\d+.*)/)
+              def previewModName = matches[0][1]
 
               echo "Substituting: " + previewModName + "-->" + previewMod
               echo "Action: " + previewModAction
             
+              @NonCPS
               mods.each { 
                 if (it.id ==~ /^${previewModName}-\d+.*/) {
                   it.id = previewMod
@@ -53,7 +55,7 @@ pipeline {
                 }
               }
               if (!exists) { 
-                newEntry = [:]
+                def newEntry = [:]
                 newEntry.put('id', previewMod)
                 newEntry.put('action', previewModAction)
                 mods << newEntry
