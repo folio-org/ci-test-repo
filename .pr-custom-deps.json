@@ -7,8 +7,4 @@
     "id" : "mod-users-15.6.0-SNAPSHOT.76.23",
     "action" : "enable"
   },
-  {
-    "id" : ""mod-codex-inventory-1.6.0-SNAPSHOT.76.23",
-    "action" : "enable"
-  }
 ]
