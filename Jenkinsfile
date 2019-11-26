@@ -31,7 +31,7 @@ pipeline {
             newInstallExtras = foliociLib.subPreviewMods(previewMods,installExtras)
          
             writeJSON file: 'install-extras-new.json', json: newInstallExtras
-            echo "cat install-extras-new.json"
+            sh 'cat install-extras-new.json'
           }
         }
       }
