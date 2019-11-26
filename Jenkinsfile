@@ -7,6 +7,7 @@ pipeline {
     origin = 'ci-test-repo'
     folioRegistry = 'http://folio-registry.aws.indexdata.com'
     tenant = 'diku'
+    releaseOnly = 'true'
   }
 
   options {
