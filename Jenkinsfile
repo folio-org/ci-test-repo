@@ -54,7 +54,7 @@ pipeline {
               if (!exists) { 
                 newEntry = [:]
                 newEntry.put('id', previewMod)
-                newEntry.put('action', previewAction)
+                newEntry.put('action', previewModAction)
                 mods << newEntry
               }
             }
