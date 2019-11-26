@@ -25,6 +25,7 @@ pipeline {
           //if ( (env.CHANGE_ID) && (fileExists('.pr-custom-deps.json')) )  {
           if (fileExists('.pr-custom-deps.json'))  {
             // get pr deps
+            @NonCPS
             def previewMods = readJSON file: '.pr-custom-deps.json'
             def mods = readJSON file: 'install-extras.json'
             def previewMod
@@ -34,7 +35,6 @@ pipeline {
             def Boolean exists
             def newEntry
 
-            @NonCPS
             previewMods.each {
               exists = false
               previewMod = it.id
