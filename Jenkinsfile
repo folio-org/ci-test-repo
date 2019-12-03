@@ -25,27 +25,13 @@ pipeline {
     stage('test') {
       steps {
         script {
-          def foliociLib = new org.folio.foliociCommands()
-
-          // Deal with PR Deps for preview mode
-          if (fileExists('.pr-custom-deps.json'))  {
-            def previewMods = readJSON file: '.pr-custom-deps.json'
-            def installExtras  = readJSON file: 'install-extras.json'
-            def newInstallExtras = foliociLib.subPreviewMods(previewMods,installExtras)
-
-            writeJSON file: 'install-extras.json', json: newInstallExtras, pretty: 2
-            sh 'cat install-extras.json'
+          // okapi tokens
+          withCredentials([usernamePassword(credentialsId: 'okapi-preview-superuser', passwordVariable: 'pass', usernameVariable: 'user')]) {
+            writeFile file: 'getOkapiToken.sh', text: libraryResource('org/folio/getOkapiToken.sh')
+            sh 'chmod +x getOkapiToken.sh'
+            def okapiToken = sh(returnStdout: true, script: "./getOkapiToken.sh -t supertenant -o https://okapi-preview.ci.folio.org -u $user -p $pass").trim()
           }
-
-          // Add extra backend deps
-          echo "Adding additional modules to stripes-install.json"
-          sh 'mv stripes-install.json stripes-install-pre.json'
-          sh 'jq -s \'.[0]=([.[]]|flatten)|.[0]\' stripes-install-pre.json install-extras.json > stripes-install.json'
-          def stripesInstallJson = readFile('./stripes-install.json')
-          platformDepCheck(env.tenant,stripesInstallJson)
-          echo 'Generating backend dependency list to okapi-install.json'
-          sh 'jq \'map(select(.id | test(\"mod-\"; \"i\")))\' install.json > okapi-install.json'
-          sh 'cat okapi-install.json'
+          echo "$okapiToken"
         }
       }
     }
