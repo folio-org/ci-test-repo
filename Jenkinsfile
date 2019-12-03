@@ -30,8 +30,8 @@ pipeline {
             writeFile file: 'getOkapiToken.sh', text: libraryResource('org/folio/getOkapiToken.sh')
             sh 'chmod +x getOkapiToken.sh'
             def okapiToken = sh(returnStdout: true, script: "./getOkapiToken.sh -t supertenant -o https://okapi-preview.ci.folio.org -u $user -p $pass").trim()
+            echo "$okapiToken"
           }
-          echo "$okapiToken"
         }
       }
     }
