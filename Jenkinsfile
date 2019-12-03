@@ -29,7 +29,7 @@ pipeline {
           withCredentials([usernamePassword(credentialsId: 'okapi-preview-superuser', passwordVariable: 'pass', usernameVariable: 'user')]) {
             writeFile file: 'getOkapiToken.sh', text: libraryResource('org/folio/getOkapiToken.sh')
             sh 'chmod +x getOkapiToken.sh'
-            def env.okapiToken = sh(returnStdout: true, script: "./getOkapiToken.sh -t supertenant -o https://okapi-preview.ci.folio.org -u $user -p $pass").trim()
+            env.okapiToken = sh(returnStdout: true, script: "./getOkapiToken.sh -t supertenant -o https://okapi-preview.ci.folio.org -u $user -p $pass").trim()
           }
             echo "$env.okapiToken"
         }
