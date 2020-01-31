@@ -1,7 +1,7 @@
 
 
 podTemplate {
-    node(POD_LABEL) {
+    node('kubepod') {
         stage('Run shell') {
             sh 'echo hello world'
         }
