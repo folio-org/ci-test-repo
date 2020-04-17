@@ -22,12 +22,11 @@ pipeline {
     stage('test') {
       steps {
         script {
-            deleteTenant("https://okapi-default.ci.folio.org", "platform_core_552_5")
-          }    
-        }
+          deleteTenant("https://okapi-default.ci.folio.org", "platform_core_552_5")
+        }    
       }
     }
-  } // end stages
+  } //end stages
 
   post {
     always {
