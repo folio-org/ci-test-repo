@@ -22,7 +22,9 @@ pipeline {
     stage('test') {
       steps {
         script {
-          deleteTenant("https://okapi-default.ci.folio.org", "platform_core_552_5")
+          withCredentials([usernamePassword(credentialsId: 'okapi-default-superuser', passwordVariable: 'pass', usernameVariable: 'user')]) {
+            deleteTenant("https://okapi-default.ci.folio.org", "platform_core_552_5")
+          }
         }    
       }
     }
