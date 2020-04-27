@@ -1,4 +1,4 @@
-@Library ('folio_jenkins_shared_libs@delete-tenant-script') _
+@Library ('folio_jenkins_shared_libs@FOLIO-2534-tenant-cleanup') _
 
 
 pipeline {
