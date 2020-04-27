@@ -24,7 +24,6 @@ pipeline {
           previewTenantCleanup("-o https://okapi-preview.ci.folio.org --dry-run")
         }    
       }
-    }
   } //end stages
 
   post {
