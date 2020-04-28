@@ -21,7 +21,7 @@ pipeline {
   stages {
     stage('test') {
       steps {
-          previewTenantCleanup("-o https://okapi-preview.ci.folio.org --dry-run")
+          previewTenantCleanup("-o https://okapi-preview.ci.folio.org")
         }    
       }
   } //end stages
